@@ -21,7 +21,9 @@ module.exports = {
   create: function(req, res) {
     InClassStudentResponse.create({
       rating: req.param("rating"),
-    identifierForVendor: req.param("identifierForVendor")
+      identifierForVendor: req.param("identifierForVendor"),
+      conceptName: req.param("conceptName"),
+      conceptID: req.param("conceptID")
     }, function(err, response) {
       if (err) return res.send(err, 500);
 
@@ -35,6 +37,15 @@ module.exports = {
 
       res.json(response);
     });
+  },
+
+  readByIdentifierForVendor: function(req, res) {
+    InClassStudentResponse.find()
+      .where({ identifierForVendor: req.param("identifierForVendor") })
+      .sort('createdAt')
+      .exec(function(err, responses) {
+        res.json(responses);
+      });
   },
 
   /**

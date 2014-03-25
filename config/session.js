@@ -18,9 +18,7 @@ module.exports.session = {
   secret: 'ffb3bf031d156c1b3802827bee5aff93',
 
   adapter: 'mongo',
-  url: ('mongodb://' +
-        process.env.MONGO_USER + ':' + process.env.MONGO_PASSWORD +
-        '@oceanic.mongohq.com:10002/app23347131'),
+  url: process.env.MONGO_URL,
   collection: 'sessions',
   auto_reconnect: true
 

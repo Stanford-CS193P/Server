@@ -38,11 +38,7 @@ module.exports.adapters = {
   // },
 
   mongo: {
-    module    : 'sails-mongo',
-    host      : 'oceanic.mongohq.com',
-    port      : 10002,
-    database  : 'app23347131',
-    user      : process.env.MONGO_USER,
-    password  : process.env.MONGO_PASSWORD
+    module: 'sails-mongo',
+    url   : process.env.MONGO_URL
   }
 };
