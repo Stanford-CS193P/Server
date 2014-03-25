@@ -23,13 +23,17 @@ module.exports = {
       rating: req.param("rating"),
     identifierForVendor: req.param("identifierForVendor")
     }, function(err, response) {
-      if (err) return res.json({success:false});
+      if (err) return res.send(err, 500);
 
       console.log(response);
-      // sails.sockets.broadcast(
-      //   "teacher", "NewStudentResponse", {response: response});
-      InClassStudentResponse.publishCreate({ id: response.id });
-      res.json({success:true});
+
+      InClassStudentResponse.publishCreate({
+        id: response.id,
+        identifierForVendor: response.identifierForVendor,
+        rating: response.rating
+      });
+
+      res.json(response);
     });
   },
 

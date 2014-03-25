@@ -18,6 +18,11 @@ module.exports.sockets = {
     // By default: do nothing
     // This is a good place to subscribe a new socket to a room, inform other users that
     // someone new has come online, or any other custom socket.io logic
+
+    // Cheap way to prevent the whole world from subscribing
+    var password = socket.handshake.query.password;
+    if (password !== "cs193pisawesome") return;
+
     var userType = socket.handshake.query.user_type;
 
     if (userType === "student") {

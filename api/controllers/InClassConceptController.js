@@ -18,17 +18,16 @@
 module.exports = {
 
   create: function(req, res) {
-    var conceptName = req.param("conceptName");
     InClassConcept.create({
-      conceptName: conceptName
+      conceptName: req.param("conceptName")
     }, function(err, concept) {
-      if (err) return res.send(err,500);
+      if (err) return res.send(err, 500);
 
-      // sails.sockets.broadcast(
-      //   "student", "NewConcept", {concept: concept});
       InClassConcept.publishCreate({
-        id: concept.id
+        id: concept.id,
+        conceptName: concept.conceptName
       });
+
       res.json(concept);
     });
   },
