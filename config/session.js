@@ -15,7 +15,14 @@ module.exports.session = {
   // Session secret is automatically generated when your new app is created
   // Replace at your own risk in production-- you will invalidate the cookies of your users,
   // forcing them to log in again.
-  secret: 'ffb3bf031d156c1b3802827bee5aff93'
+  secret: 'ffb3bf031d156c1b3802827bee5aff93',
+
+  adapter: 'mongo',
+  host: 'oceanic.mongohq.com',
+  port: 10002,
+  db: 'app23347131',
+  collection: 'sessions'
+
 
 
   // In production, uncomment the following lines to set up a shared redis session store
