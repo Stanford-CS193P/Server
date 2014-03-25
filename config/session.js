@@ -18,12 +18,11 @@ module.exports.session = {
   secret: 'ffb3bf031d156c1b3802827bee5aff93',
 
   adapter: 'mongo',
-  host: 'oceanic.mongohq.com',
-  port: 10002,
-  db: 'app23347131',
-  collection: 'sessions'
-
-
+  url: ('mongodb://' +
+        process.env.MONGO_USER + ':' + process.env.MONGO_PASSWORD +
+        '@oceanic.mongohq.com:10002/app23347131'),
+  collection: 'sessions',
+  auto_reconnect: true
 
   // In production, uncomment the following lines to set up a shared redis session store
   // that can be shared across multiple Sails.js servers
