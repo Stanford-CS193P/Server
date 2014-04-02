@@ -27,6 +27,8 @@ module.exports.sockets = {
 
     if (userType === "student") {
       InClassConcept.subscribe(socket);
+      InClassQuestion.subscribe(socket);
+      InClassConcept.publishMostRecentConceptFromToday(socket);
     }
 
     if (userType === "teacher") {
