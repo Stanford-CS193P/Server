@@ -1,5 +1,5 @@
 /**
- * InClassStudentResponseController
+ * InClassQuestionResponseController
  *
  * @module      :: Controller
  * @description	:: A set of functions called `actions`.
@@ -17,40 +17,22 @@
 
 module.exports = {
 
-
   create: function(req, res) {
-    InClassStudentResponse.create({
+    InClassQuestionResponse.create({
       identifierForVendor: req.param("identifierForVendor"),
-      rating: req.param("rating"),
-      conceptName: req.param("conceptName"),
-      conceptID: req.param("conceptID")
-    }, function(err, response) {
+      questionID: req.param("questionID"),
+      questionText: req.param("questionText"),
+      response: req.param("response")
+    }, function(err, model) {
       if (err) return res.send(err, 500);
-
-      console.log(response);
-
-      InClassStudentResponse.publishCreate({
-        id: response.id,
-        identifierForVendor: response.identifierForVendor,
-        rating: response.rating
-      });
-
-      res.json(response);
+      InClassQuestionResponse.publishCreate(model.toObject());
+      res.json(model);
     });
-  },
-
-  readByIdentifierForVendor: function(req, res) {
-    InClassStudentResponse.find()
-      .where({ identifierForVendor: req.param("identifierForVendor") })
-      .sort('createdAt')
-      .exec(function(err, responses) {
-        res.json(responses);
-      });
   },
 
   /**
    * Overrides for the settings in `config/controllers.js`
-   * (specific to InClassStudentResponseController)
+   * (specific to InClassQuestionResponseController)
    */
   _config: {}
 
