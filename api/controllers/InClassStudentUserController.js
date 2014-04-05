@@ -15,9 +15,18 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
+
 module.exports = {
 
   create: function(req, res) {
+    // So that random people can't access this endpoint
+    // It is assumed that
+    // https://www.stanford.edu/class/cs193p/cgi-bin/app_auth/index.php
+    // is the only client that knows this password.
+    if (req.param("password") !== "cs193pisawesome") {
+      return res.send("Request must originate from valid endpoint", 500);
+    }
+
     var identifierForVendor = req.param("identifierForVendor");
     var sunetid = req.param("sunetid");
 
