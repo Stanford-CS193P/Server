@@ -36,7 +36,8 @@ module.exports.policies = {
   },
 
   InClassStudentUserController: {
-    create: true
+    create: true,
+    isAssociated: true
   },
 
   /*

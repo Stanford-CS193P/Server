@@ -18,15 +18,43 @@
 module.exports = {
 
   create: function(req, res) {
-    InClassStudentUser.create({
-      identifierForVendor: req.param("identifierForVendor"),
-      sunetid: req.param("sunetid")
-    }, function(err, model) {
-      return res.send(err, 500);
-      if (err) return res.send(err, 500);
-      console.log(model);
-      res.json(model);
-    });
+    var identifierForVendor = req.param("identifierForVendor");
+    var sunetid = req.param("sunetid");
+
+    InClassStudentUser
+      .find()
+      .where({ sunetid: sunetid })
+      .done(function(err, models) {
+        if (err) return res.send(err, 500);
+
+        for (var i = 0; i < models.length; i++) {
+          if (models[i].identifierForVendor === identifierForVendor) {
+            return res.json(models[i]);
+          }
+          models[i].destroy(function(err) { console.log(err); });
+        }
+
+        InClassStudentUser.create({
+          identifierForVendor: identifierForVendor,
+          sunetid: sunetid
+        }, function(err, model) {
+          if (err) return res.send(err, 500);
+          res.json(model);
+        });
+
+      });
+  },
+
+  isAssociated: function(req, res) {
+    InClassStudentUser
+      .find()
+      .where({ identifierForVendor: req.param("identifierForVendor") })
+      .limit(1)
+      .done(function(err, model) {
+        if (model.length == 0) return res.json({ isAssociated: false });
+        model = model[0];
+        res.json({ isAssociated: true, user: model });
+      });
   },
 
 
