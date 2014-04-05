@@ -10,6 +10,11 @@ module.exports = {
 
   attributes: {
 
+    sunetid: {
+      type: "STRING",
+      required: true
+    },
+
     identifierForVendor: {
       type: "STRING",
       required: true
@@ -33,3 +38,4 @@ module.exports = {
   }
 
 };
+

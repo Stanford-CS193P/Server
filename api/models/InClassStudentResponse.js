@@ -15,6 +15,11 @@ module.exports = {
       required: true
     },
 
+    sunetid: {
+      type: "STRING",
+      required: true
+    },
+
     // An alphanumeric string that uniquely identifies a device to the app's
     // vendor.
     identifierForVendor: {

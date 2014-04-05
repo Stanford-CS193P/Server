@@ -20,6 +20,7 @@ module.exports = {
 
   create: function(req, res) {
     InClassStudentResponse.create({
+      sunetid: req.param("sunetid"),
       identifierForVendor: req.param("identifierForVendor"),
       rating: req.param("rating"),
       conceptName: req.param("conceptName"),
