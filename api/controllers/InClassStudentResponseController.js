@@ -28,12 +28,11 @@ module.exports = {
     }, function(err, response) {
       if (err) return res.send(err, 500);
 
-      console.log(response);
-
       InClassStudentResponse.publishCreate({
         id: response.id,
         identifierForVendor: response.identifierForVendor,
-        rating: response.rating
+        rating: response.rating,
+        createdAt: response.createdAt
       });
 
       res.json(response);

@@ -18,11 +18,20 @@
 module.exports = {
 
   create: function(req, res) {
+    var type = "";
+    var typeParam = req.param("type");
+    if (typeof(typeParam) === "number") {
+      if (typeParam === 0) type = "TRUE_FALSE";
+      else if (typeParam === 1) type = "MULTIPLE_CHOICE";
+      else if (typeParam === 2) type = "FREE_RESPONSE";
+    } else if (typeof(typeParam) === "string") {
+      type = typeParam;
+    }
+
     InClassQuestion.create({
       text: req.param("text"),
-      type: req.param("type"),
-      choices: (req.param("type") === "MULTIPLE_CHOICE" ?
-                req.param("choices") : [])
+      type: type,
+      choices: (type === "MULTIPLE_CHOICE" ? req.param("choices") : [])
     }, function(err, model) {
       if (err) return res.send(err, 500);
 
