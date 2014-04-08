@@ -44,6 +44,7 @@ module.exports = {
       .where({ identifierForVendor: req.param("identifierForVendor") })
       .sort('createdAt')
       .exec(function(err, responses) {
+        if (err) return res.send(err, 500);
         res.json(responses);
       });
   },
