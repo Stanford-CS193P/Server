@@ -32,7 +32,8 @@ module.exports.policies = {
   },
 
   InClassQuestionResponseController: {
-    create: true
+    create: true,
+    readByQuestionID: true
   },
 
   InClassStudentUserController: {

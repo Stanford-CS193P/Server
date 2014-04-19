@@ -31,6 +31,15 @@ module.exports = {
     });
   },
 
+  readByQuestionID: function(req, res) {
+    InClassQuestionResponse.find()
+      .where({ questionID: req.param("questionID") })
+      .exec(function(err, responses) {
+        if (err) return res.send(err, 500);
+        res.json(responses);
+      });
+  },
+
   /**
    * Overrides for the settings in `config/controllers.js`
    * (specific to InClassQuestionResponseController)

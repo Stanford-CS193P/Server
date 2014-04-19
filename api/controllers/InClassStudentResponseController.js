@@ -28,12 +28,11 @@ module.exports = {
     }, function(err, response) {
       if (err) return res.send(err, 500);
 
-      console.log(response);
-
       InClassStudentResponse.publishCreate({
         id: response.id,
         identifierForVendor: response.identifierForVendor,
-        rating: response.rating
+        rating: response.rating,
+        createdAt: response.createdAt
       });
 
       res.json(response);
@@ -45,6 +44,7 @@ module.exports = {
       .where({ identifierForVendor: req.param("identifierForVendor") })
       .sort('createdAt')
       .exec(function(err, responses) {
+        if (err) return res.send(err, 500);
         res.json(responses);
       });
   },

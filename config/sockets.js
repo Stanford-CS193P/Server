@@ -33,6 +33,7 @@ module.exports.sockets = {
 
     if (userType === "teacher") {
       InClassStudentResponse.subscribe(socket);
+      InClassQuestionResponse.subscribe(socket);
     }
   },
 
