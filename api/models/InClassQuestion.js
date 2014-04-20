@@ -25,8 +25,50 @@ module.exports = {
 
     choices: {
       type: "ARRAY"
+    },
+
+    isOpen: {
+      type: "boolean",
+      defaultsTo: true
     }
 
+  },
+
+  publishMostRecentOpenUnansweredQuestion: function(socket, identifierForVendor) {
+    InClassQuestion.findOne()
+      .where({ isOpen: true })
+      .sort("createdAt DESC")
+      .done(function(err, question) {
+        if (err || !question) return;
+
+        InClassQuestionResponse.findOne()
+          .where({
+            questionID: question.id,
+            identifierForVendor: identifierForVendor
+          }).done(function(err, response) {
+            if (err) return;
+
+            // device has already submitted response
+            if (response) return;
+
+            InClassQuestion.subscribe(socket, question);
+
+            // There wasn't a way to send a message to just one socket through
+            // sails (http://sailsjs.org/#!documentation/sockets), so we create
+            // the message manually.
+            socket.emit('message', {
+              id:question.id,
+              model:'inclassquestion',
+              verb:'create',
+              data: {
+                id: question.id,
+                text: question.text,
+                type: question.type,
+                choices: question.choices
+              }
+            });
+          });
+      });
   }
 
 };

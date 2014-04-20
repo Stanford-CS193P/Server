@@ -24,11 +24,14 @@ module.exports.sockets = {
     if (password !== "cs193pisawesome") return;
 
     var userType = socket.handshake.query.user_type;
+    var identifierForVendor = socket.handshake.query.identifier_for_vendor;
 
     if (userType === "student") {
       InClassConcept.subscribe(socket);
       InClassQuestion.subscribe(socket);
       InClassConcept.publishMostRecentConceptFromToday(socket);
+      InClassQuestion.publishMostRecentOpenUnansweredQuestion(
+        socket, identifierForVendor);
     }
 
     if (userType === "teacher") {

@@ -46,11 +46,29 @@ module.exports = {
     });
   },
 
+  close: function(req, res) {
+    var id = req.param("id");
+
+    InClassQuestion.findOne(id).done(function(err, question) {
+      if (err) return res.send(err, 500);
+      if (!question) return res.send("no question with id " + id, 500);
+      question.isOpen = false;
+      question.save(function(err){
+        if (err) return res.send(err, 500);
+
+        InClassQuestion.publishUpdate(question.id, {
+          isOpen: question.isOpen
+        });
+        return res.json(question);
+      });
+    });
+  },
+
   /**
    * Overrides for the settings in `config/controllers.js`
    * (specific to InClassQuestionController)
    */
   _config: {}
 
-
 };
+

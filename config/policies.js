@@ -28,7 +28,8 @@ module.exports.policies = {
   },
 
   InClassQuestionController: {
-    create: true
+    create: true,
+    close: true
   },
 
   InClassQuestionResponseController: {
